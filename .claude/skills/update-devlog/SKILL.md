@@ -1,6 +1,6 @@
 ---
 name: update-devlog
-description: 创建/更新devlog.md,用于总结并记录每日提交的项目内改动
+description: 创建/更新devlog.md,用于总结并记录项目内改动
 trigger: manual
 ---
 

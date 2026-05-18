@@ -6,14 +6,14 @@
 
 **更新时间: 2026-05-18 17:46**
 
-- **安装 Claude Code 插件**（未提交） — 启用 `skill-creator@claude-plugins-official` 和 `superpowers@claude-plugins-official`，配置写入 `.claude/settings.json`。
+- **安装 Claude Code 插件** — 启用 `skill-creator@claude-plugins-official` 和 `superpowers@claude-plugins-official`，配置写入 `.claude/settings.json`。
 - **创建本地 skill `update-devlog`** — 用于记录并生成 devlog.md 的项目改动日志。
 
 ---
 
 **更新时间: 2026-05-18 17:30**
 
-- **修改 `CLAUDE.md`**（未提交） — 补充 TypeScript 配置说明、Node 版本要求、Vue DevTools 集成、Vitest 配置细节及构建脚本说明。
+- **修改 `CLAUDE.md`** — 补充 TypeScript 配置说明、Node 版本要求、Vue DevTools 集成、Vitest 配置细节及构建脚本说明。
 
 ---
 
