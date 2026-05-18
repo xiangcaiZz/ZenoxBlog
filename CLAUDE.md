@@ -40,4 +40,13 @@ src/
 The root `tsconfig.json` uses project references to three tsconfigs:
 - `tsconfig.app.json` — app source (extends `@vue/tsconfig/tsconfig.dom.json`, `noUncheckedIndexedAccess: true`)
 - `tsconfig.node.json` — Vite/Vitest config files
-- `tsconfig.vitest.json` — test files
+- `tsconfig.vitest.json` — test files, extends `tsconfig.app.json` but overrides `include`/`exclude` and adds `node` + `jsdom` types
+
+An `env.d.ts` file in the project root (or `src/`) is expected for Vite client-side type declarations (e.g., `/// <reference types="vite/client" />`).
+
+## Other Notes
+
+- **Node version:** `^20.19.0 || >=22.12.0` (per `engines` in package.json).
+- **Dev server** includes `vite-plugin-vue-devtools` for Vue DevTools integration.
+- **Vitest config** (`vitest.config.ts`) merges the Vite config so the `@` alias is available in tests. Test environment is `jsdom`.
+- **Build script** uses `npm-run-all2` to run type-check and vite build in parallel.
