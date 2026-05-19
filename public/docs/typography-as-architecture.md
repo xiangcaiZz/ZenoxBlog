@@ -1,51 +1,51 @@
 ---
-title: "Typography as Architecture: Building Visual Hierarchy"
+title: "字体排印即架构：构建视觉层次"
 date: "2026-04-20"
-category: "Design"
-readTime: "5 min read"
-excerpt: "Type is not just about readability — it is the structural framework of any interface. A deep dive into typographic systems for the web."
+category: "设计"
+readTime: "5 分钟"
+excerpt: "字体不仅仅是可读性——它是任何界面的结构框架。一次关于网页字体排印系统的深度探索。"
 ---
 
-# Typography as Architecture: Building Visual Hierarchy
+# 字体排印即架构：构建视觉层次
 
-Typography is the most underrated tool in interface design. Color schemes and animations get attention, but type does the heavy lifting of communication. Without a solid typographic foundation, even the most beautiful UI falls apart.
+字体排印是界面设计中最被低估的工具。配色方案和动画吸引眼球，但字体承担了沟通的重任。没有扎实的字体排印基础，即使最漂亮的 UI 也会崩塌。
 
-## Type as Structure
+## 字体作为结构
 
-Think of typography as the load-bearing walls of your interface:
+把字体排印想象成界面的承重墙：
 
-- **Headings** define the information architecture — they tell users where they are and what matters.
-- **Body text** carries the payload — the content users came for.
-- **Labels and captions** provide navigation cues and context.
+- **标题**定义了信息架构——它们告诉用户他们在哪里，什么重要。
+- **正文**承载了主要内容——用户来看的内容。
+- **标签和说明文字**提供导航线索和上下文。
 
-If users can't scan your page and understand its structure in five seconds, the problem is usually typographic hierarchy, not layout.
+如果用户无法在五秒内扫视页面并理解其结构，问题通常出在字体排印层次上，而非布局。
 
-## The Four Levers of Hierarchy
+## 层次感的四大杠杆
 
-### 1. Size
+### 1. 字号
 
-The most obvious lever. But size alone is crude — too much variation creates noise, not hierarchy. A good type scale (like a modular scale based on the golden ratio) provides enough distinction without fragmentation.
+最显而易见的杠杆。但仅凭字号是粗糙的——过多的变化会制造噪音而非层次。一个好的字号比例（如基于黄金比例的模块化比例）能提供足够的区分度而不碎片化。
 
-### 2. Weight
+### 2. 字重
 
-A single weight change — Regular to Semibold — often communicates more than a 4px size increase. Use weight for local emphasis within a size level.
+单一的字重变化——从 Regular 到 Semibold——往往比 4px 的字号变化传递更多信息。在相同字号级别内使用字重进行局部强调。
 
-### 3. Color
+### 3. 颜色
 
-Not just black to gray — subtle warmth shifts (cool grays for captions, warm near-blacks for body) create hierarchy without shouting. Low-contrast elements recede naturally.
+不只是黑到灰——微妙的色温变化（冷灰色用于说明文字，偏暖的近黑色用于正文）无需大喊大叫就能创造层次。低对比度的元素自然地后退。
 
-### 4. Space
+### 4. 空间
 
-Whitespace around type is as important as the type itself. Consistent spacing ratios (e.g., heading-bottom = 0.5x heading-size) create rhythm that guides the eye.
+字体周围的留白与字体本身同等重要。一致的间距比例（如标题下方间距 = 0.5 倍标题字号）创造出引导视线的节奏感。
 
-## Practical Starting Points
+## 实践起点
 
-For web projects, start with these defaults and adjust:
+对于网页项目，从以下默认值开始并调整：
 
-- **Body:** 16-18px, line-height 1.6-1.7
-- **H1:** 2.5-3x body size
-- **H2:** 1.75-2x body size
-- **H3:** 1.25-1.5x body size
-- **Captions:** 0.75-0.875x body size
+- **正文：** 16-18px，行高 1.6-1.7
+- **H1：** 正文的 2.5-3 倍
+- **H2：** 正文的 1.75-2 倍
+- **H3：** 正文的 1.25-1.5 倍
+- **说明文字：** 正文的 0.75-0.875 倍
 
-One font family is enough. Two (display + body) is plenty. Three is usually a mistake.
+一个字体家族就足够了。两个（展示字体 + 正文字体）最佳。三个通常是错误。

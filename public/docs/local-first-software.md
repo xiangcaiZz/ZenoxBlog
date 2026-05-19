@@ -1,47 +1,47 @@
 ---
-title: "The Quiet Revolution of Local-First Software"
+title: "本地优先软件的悄然革命"
 date: "2026-04-28"
-category: "Technology"
-readTime: "7 min read"
-excerpt: "CRDTs, offline-first architectures, and the growing movement to put data back in the hands of users rather than centralized servers."
+category: "技术"
+readTime: "7 分钟"
+excerpt: "CRDT、离线优先架构，以及不断壮大的运动——将数据归还给用户，而非集中式服务器。"
 ---
 
-# The Quiet Revolution of Local-First Software
+# 本地优先软件的悄然革命
 
-For two decades, we've been taught that the server is the source of truth. Your device is a thin client — a window into data that lives somewhere else. That model is being challenged by a growing movement called local-first software.
+二十年来，我们一直被教导服务器是数据的权威来源。你的设备只是一个瘦客户端——通往存储在别处的数据的一扇窗。这个模型正受到一场日益壮大的运动——本地优先软件的挑战。
 
-## What Is Local-First?
+## 什么是本地优先？
 
-Local-first software treats the local device as the primary data store. The server is a replica — useful for backup and multi-device sync, but not the authority.
+本地优先软件将本地设备视为主要数据存储。服务器只是一个副本——对于备份和多设备同步很有用，但不是权威。
 
-Key properties:
+关键特性：
 
-- **Instant responsiveness** — no spinner waiting for a network round-trip.
-- **Offline by default** — network is an optimization, not a requirement.
-- **Data ownership** — your data lives on your device, in formats you can access.
+- **即时响应**——没有等待网络往返的加载动画。
+- **默认离线**——网络是一种优化，而非必需条件。
+- **数据所有权**——你的数据存在于你的设备上，以你可以访问的格式存储。
 
-## The Technology Behind It
+## 背后的技术
 
-### CRDTs (Conflict-Free Replicated Data Types)
+### CRDT（无冲突复制数据类型）
 
-CRDTs are the mathematical breakthrough that makes local-first practical. They allow multiple devices to edit the same data concurrently and merge the results deterministically — no conflict resolution dialogs, no "which version is correct?" decisions.
+CRDT 是让本地优先变得可行的数学突破。它们允许多台设备同时编辑同一份数据，并确定性地合并结果——没有冲突解决对话框，没有"哪个版本是对的？"的决策。
 
-### The Sync Layer
+### 同步层
 
-Projects like Automerge, Yjs, and ElectricSQL provide sync engines that handle the hard parts: ordering, merging, and reconciling concurrent edits across devices.
+Automerge、Yjs 和 ElectricSQL 等项目提供了处理困难问题的同步引擎：排序、合并，以及跨设备协调并发编辑。
 
-## Who's Building This Way?
+## 谁正在这样做？
 
-- **Linear** syncs issue data locally and resolves conflicts seamlessly.
-- **Figma** uses CRDTs under the hood for real-time collaborative editing.
-- **Obsidian** stores notes as local markdown files, with optional sync.
+- **Linear** 在本地同步 issue 数据并无缝解决冲突。
+- **Figma** 底层使用 CRDT 进行实时协作编辑。
+- **Obsidian** 将笔记存储为本地 Markdown 文件，并提供可选的同步功能。
 
-## The Trade-Offs
+## 权衡
 
-Local-first isn't a silver bullet:
+本地优先并非银弹：
 
-- **Search and aggregation** are harder — you can't just run SQL across all user data.
-- **Permissions** get complex when data lives on devices.
-- **The ecosystem** is still young; many patterns are being invented in real-time.
+- **搜索和聚合**更困难——你不能直接对所有用户数据运行 SQL。
+- **权限管理**在数据位于设备上时变得复杂。
+- **生态**仍然年轻；许多模式正在实时被发明。
 
-But the pendulum is swinging. After years of surrendering data to centralized platforms, developers are building tools that respect data ownership. That's a revolution worth joining.
+但钟摆正在回摆。经过多年将数据拱手让给集中式平台后，开发者正在构建尊重数据所有权的工具。这是一场值得加入的革命。

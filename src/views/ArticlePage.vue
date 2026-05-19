@@ -113,8 +113,8 @@ function goToArticle(slug: string) {
 
     <!-- Error state -->
     <div v-else-if="error" class="article-page__status">
-      <p class="article-page__error-text">Article not found.</p>
-      <RouterLink to="/" class="article-page__back-link">&larr; Back to Home</RouterLink>
+      <p class="article-page__error-text">文章未找到。</p>
+      <RouterLink to="/" class="article-page__back-link">&larr; 返回首页</RouterLink>
     </div>
 
     <!-- Article content -->
@@ -149,7 +149,7 @@ function goToArticle(slug: string) {
             class="article-nav__link article-nav__link--prev"
             @click="goToArticle(prevArticle()!.slug)"
           >
-            <span class="article-nav__label">&larr; Previous</span>
+            <span class="article-nav__label">&larr; 上一篇</span>
             <span class="article-nav__title">{{ prevArticle()!.title }}</span>
           </button>
           <span v-else class="article-nav__link article-nav__link--placeholder"></span>
@@ -159,7 +159,7 @@ function goToArticle(slug: string) {
             class="article-nav__link article-nav__link--next"
             @click="goToArticle(nextArticle()!.slug)"
           >
-            <span class="article-nav__label">Next &rarr;</span>
+            <span class="article-nav__label">下一篇 &rarr;</span>
             <span class="article-nav__title">{{ nextArticle()!.title }}</span>
           </button>
           <span v-else class="article-nav__link article-nav__link--placeholder"></span>

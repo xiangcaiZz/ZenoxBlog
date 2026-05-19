@@ -14,18 +14,17 @@ import { articles } from '@/data/articles'
       <div class="hero__stars" aria-hidden="true"></div>
       <div class="hero__inner">
         <div class="hero__accent-line"></div>
-        <p class="hero__overline">Welcome to Zenox</p>
-        <h1 class="hero__title">Explore the<br />Unknown</h1>
+        <p class="hero__overline">欢迎来到 Zenox</p>
+        <h1 class="hero__title">探索<br />未知</h1>
         <p class="hero__subtitle">
-          A personal journal on technology, design, and the craft of building software —
-          navigating the frontier where code meets creativity.
+          一份关于技术、设计与软件工艺的个人日志——在代码与创意交汇的边界航行。
         </p>
         <div class="hero__actions">
           <a href="#" class="hero__btn hero__btn--primary">
-            Read Articles
+            阅读文章
             <span class="hero__btn-arrow">&darr;</span>
           </a>
-          <a href="#" class="hero__btn hero__btn--secondary"> Learn More </a>
+          <a href="#" class="hero__btn hero__btn--secondary"> 了解更多 </a>
         </div>
       </div>
     </section>
@@ -35,7 +34,7 @@ import { articles } from '@/data/articles'
       <div class="featured__inner">
         <div class="section-header">
           <span class="section-header__line"></span>
-          <span class="section-header__label">Latest Articles</span>
+          <span class="section-header__label">最新文章</span>
         </div>
 
         <div class="featured__grid">
@@ -57,19 +56,18 @@ import { articles } from '@/data/articles'
     <section class="newsletter">
       <div class="newsletter__inner">
         <div class="newsletter__accent-line"></div>
-        <h2 class="newsletter__title">Stay in Orbit</h2>
+        <h2 class="newsletter__title">保持关注</h2>
         <p class="newsletter__desc">
-          Get new articles delivered to your inbox. No spam, just thoughtful writing on tech and
-          design.
+          新文章直达你的邮箱。没有垃圾邮件，只有关于技术与设计的深度思考。
         </p>
         <form class="newsletter__form" @submit.prevent>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="输入你的邮箱"
             class="newsletter__input"
-            aria-label="Email address"
+            aria-label="邮箱地址"
           />
-          <button type="submit" class="newsletter__submit">Subscribe</button>
+          <button type="submit" class="newsletter__submit">订阅</button>
         </form>
       </div>
     </section>

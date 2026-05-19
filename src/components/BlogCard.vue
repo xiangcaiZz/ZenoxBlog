@@ -30,7 +30,7 @@ defineProps<{
       <div class="card__footer">
         <time class="card__date" :datetime="date">{{ date }}</time>
         <span class="card__cta">
-          Read
+          阅读
           <span class="card__arrow">&rarr;</span>
         </span>
       </div>

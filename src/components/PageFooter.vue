@@ -4,18 +4,18 @@
       <div class="footer__top">
         <div class="footer__brand">
           <span class="footer__logo">&#9670; ZENOX</span>
-          <p class="footer__tagline">Exploring ideas at the frontier of technology and design.</p>
+          <p class="footer__tagline">在技术与设计的边界探索思想。</p>
         </div>
 
         <div class="footer__columns">
           <div class="footer__col">
-            <h4 class="footer__col-title">Navigate</h4>
-            <a href="#" class="footer__link">Articles</a>
-            <a href="#" class="footer__link">Categories</a>
-            <a href="#" class="footer__link">About</a>
+            <h4 class="footer__col-title">导航</h4>
+            <a href="#" class="footer__link">文章</a>
+            <a href="#" class="footer__link">分类</a>
+            <a href="#" class="footer__link">关于</a>
           </div>
           <div class="footer__col">
-            <h4 class="footer__col-title">Connect</h4>
+            <h4 class="footer__col-title">联系</h4>
             <a href="#" class="footer__link">GitHub</a>
             <a href="#" class="footer__link">Twitter</a>
             <a href="#" class="footer__link">RSS</a>
@@ -26,8 +26,8 @@
       <div class="footer__divider"></div>
 
       <div class="footer__bottom">
-        <span>&copy; 2026 Zenox Blog. All rights reserved.</span>
-        <span>Designed with the spirit of exploration.</span>
+        <span>&copy; 2026 Zenox Blog. 保留所有权利。</span>
+        <span>以探索精神设计。</span>
       </div>
     </div>
   </footer>

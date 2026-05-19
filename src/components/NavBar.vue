@@ -16,7 +16,7 @@ const isMenuOpen = ref(false)
         class="navbar__toggle"
         :class="{ 'navbar__toggle--open': isMenuOpen }"
         @click="isMenuOpen = !isMenuOpen"
-        aria-label="Toggle menu"
+        aria-label="切换菜单"
       >
         <span></span>
         <span></span>
@@ -24,10 +24,10 @@ const isMenuOpen = ref(false)
       </button>
 
       <div class="navbar__links" :class="{ 'navbar__links--open': isMenuOpen }">
-        <a href="#" class="navbar__link">Articles</a>
-        <a href="#" class="navbar__link">Categories</a>
-        <a href="#" class="navbar__link">About</a>
-        <a href="#" class="navbar__link navbar__link--accent">Subscribe</a>
+        <a href="#" class="navbar__link">文章</a>
+        <a href="#" class="navbar__link">分类</a>
+        <a href="#" class="navbar__link">关于</a>
+        <a href="#" class="navbar__link navbar__link--accent">订阅</a>
       </div>
     </div>
   </nav>

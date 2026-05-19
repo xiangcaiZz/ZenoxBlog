@@ -1,45 +1,45 @@
 ---
-title: "Designing for the Unknown: A Systems Approach to UI"
+title: "为未知而设计：系统化 UI 思维方式"
 date: "2026-05-10"
-category: "Design"
-readTime: "6 min read"
-excerpt: "When building interfaces for complex systems, traditional design patterns fall short. A systems-thinking approach changes everything."
+category: "设计"
+readTime: "6 分钟"
+excerpt: "当为复杂系统构建界面时，传统的设计模式不再适用。系统化思维方式将改变一切。"
 ---
 
-# Designing for the Unknown: A Systems Approach to UI
+# 为未知而设计：系统化 UI 思维方式
 
-Most design methodologies assume you know what you're building. You have a spec, user stories, Figma mocks — the path from problem to solution is linear. But what about when you don't know what you're building?
+大多数设计方法论假设你知道自己在构建什么。你有需求规格、用户故事、Figma 设计稿——从问题到解决方案的路径是线性的。但当你不知道自己在构建什么时，该怎么办？
 
-## The Problem with Linear Design
+## 线性设计的困境
 
-Complex systems — developer tools, data platforms, infrastructure consoles — don't fit into neat wireframes. Their users are domain experts doing things the designer has never done. The traditional design process breaks down:
+复杂系统——开发者工具、数据平台、基础设施控制台——无法塞进整齐的线框图里。它们的用户是领域专家，做着设计师从未做过的事情。传统的设计流程在这里失效了：
 
-- You can't interview every type of user.
-- You can't predict every workflow.
-- You can't mock every state.
+- 你无法访谈每一类用户。
+- 你无法预测每一种工作流。
+- 你无法为每一种状态制作原型。
 
-## Systems Thinking as a Design Tool
+## 系统思维作为设计工具
 
-Instead of designing pages, design primitives. Instead of prescribing workflows, compose them from reusable parts. This is systems thinking applied to UI:
+不要设计页面，设计原语。不要规定工作流，从可复用的部件组合它们。这就是系统思维在 UI 中的应用：
 
-1. **Identify the atomic units** of the domain — what are the fundamental objects users manipulate?
-2. **Define the verbs** — what operations make sense on those objects?
-3. **Build composable views** that let users arrange primitives however they need.
+1. **识别领域的原子单元**——用户操作的基本对象是什么？
+2. **定义动词**——对这些对象可以执行哪些操作？
+3. **构建可组合的视图**，让用户按需排列原语。
 
-## Concrete Techniques
+## 具体技巧
 
-### Property-Based, Not Prescription-Based
+### 基于属性，而非基于预设
 
-Don't design "the dashboard page." Design a flexible grid that can display any metric from any source. Users will build their own dashboards that are better than anything you'd design for them.
+不要设计"仪表盘页面"。设计一个灵活的网格，可以展示来自任何数据源的任何指标。用户会构建出比你为他们设计的更好的仪表盘。
 
-### Observable State
+### 可观察的状态
 
-Every object in the system should expose its state. Not through a REST endpoint, but through a stream. When state changes, the UI reacts — no polling, no refresh buttons.
+系统中的每个对象都应该暴露其状态。不是通过 REST 接口，而是通过数据流。当状态改变时，UI 自动响应——不需要轮询，不需要刷新按钮。
 
-### Command Palettes Over Menus
+### 命令面板优先于菜单
 
-Power users don't navigate menus. They type. A good command palette with fuzzy matching handles the long tail of operations far better than a nested navigation hierarchy.
+高级用户不浏览菜单，他们直接输入。一个支持模糊匹配的命令面板，处理长尾操作的效果远胜嵌套的导航层级。
 
-## The Takeaway
+## 核心启示
 
-Designing for the unknown means accepting that you are not the expert — your users are. Your job is to give them primitives sharp enough to build their own solutions.
+为未知而设计意味着承认你并非专家——你的用户才是。你的工作是提供足够锋利的原语，让他们构建自己的解决方案。

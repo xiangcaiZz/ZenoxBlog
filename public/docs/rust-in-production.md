@@ -1,43 +1,43 @@
 ---
-title: "Rust in Production: Lessons from a Year of Shipping"
+title: "Rust 实战：一年生产环境经验总结"
 date: "2026-05-03"
-category: "Engineering"
-readTime: "12 min read"
-excerpt: "After migrating core services to Rust, here are the surprising wins, the unexpected friction, and what nobody tells you about the ecosystem."
+category: "工程"
+readTime: "12 分钟"
+excerpt: "将核心服务迁移到 Rust 一年后，这里有意想不到的收获、意料之外的摩擦，以及鲜有人提及的生态真相。"
 ---
 
-# Rust in Production: Lessons from a Year of Shipping
+# Rust 实战：一年生产环境经验总结
 
-A year ago, we made the decision to rewrite our core data pipeline in Rust. The existing Python services worked, but they were expensive to run and brittle at scale. Here's what we learned.
+一年前，我们决定用 Rust 重写核心数据管道。现有的 Python 服务虽然能跑，但在规模下运行成本高昂且脆弱。以下是我们学到的。
 
-## The Good Parts
+## 好的部分
 
-### Performance Without Heroics
+### 无需折腾的高性能
 
-Our Python services required careful tuning — connection pooling, async workers, memory profiling — to handle 5,000 messages per second. The Rust replacement handles 50,000 on a single thread without breaking a sweat. No tuning required.
+我们的 Python 服务需要精细调优——连接池、异步工作器、内存分析——才能处理每秒 5,000 条消息。而 Rust 替代方案在单线程上轻松处理 50,000 条。无需任何调优。
 
-### Fearless Refactoring Is Real
+### 无畏重构是真实的
 
-The compiler really does catch everything. We've done major architectural refactors — splitting services, changing data models — and never once worried about runtime errors. The type system and borrow checker earn their reputation.
+编译器确实会捕获一切。我们进行了多次重大架构重构——拆分服务、更改数据模型——从未担心运行时错误。类型系统和借用检查器名副其实。
 
-### The Tooling Is Excellent
+### 工具链出色
 
-Cargo, rust-analyzer, clippy, rustfmt — the developer experience is cohesive in a way that few ecosystems match. Coming from Python, where you're stitching together five different tools, it's refreshing.
+Cargo、rust-analyzer、clippy、rustfmt——开发者体验的整合程度很少有生态能匹敌。相比之下，在 Python 中你要拼凑五种不同的工具，这令人耳目一新。
 
-## The Hard Parts
+## 困难的部分
 
-### Async Rust Has a Learning Curve
+### 异步 Rust 有学习曲线
 
-Tokio is powerful, but the ecosystem fragmentation between sync and async is real. You can't just call an async function from sync code — the colors problem is alive and well.
+Tokio 很强大，但同步与异步之间的生态割裂是真实存在的。你不能简单地从同步代码调用异步函数——函数着色问题依然存在。
 
-### Compile Times Are Still Painful
+### 编译时间仍然痛苦
 
-CI builds take 8-12 minutes for a ~40k line codebase. Incremental compilation helps locally, but clean CI builds are a regular friction point.
+对于大约 4 万行代码的代码库，CI 构建需要 8-12 分钟。增量编译在本地有帮助，但干净的 CI 构建始终是个痛点。
 
-### The Crate Ecosystem Is Young but Maturing
+### Crate 生态年轻但在成熟
 
-For core infrastructure — HTTP, serialization, database drivers — the ecosystem is solid. For niche needs, you'll find a crate with 12 stars and 3 commits from 2019. Choose carefully.
+对于核心基础设施——HTTP、序列化、数据库驱动——生态已经稳固。对于小众需求，你可能会找到一个拥有 12 个 star 和 2019 年 3 次提交的 crate。谨慎选择。
 
-## Would We Do It Again?
+## 我们会再做一次吗？
 
-Yes, without hesitation. The operational savings alone — 80% reduction in CPU, 90% reduction in memory — justified the investment. But the real win is confidence: we deploy on Fridays now, and nobody worries.
+毫不犹豫。光是运维成本——CPU 降低 80%，内存降低 90%——就足以证明投入是值得的。但真正的好处是信心：我们现在周五部署，没人担心。
