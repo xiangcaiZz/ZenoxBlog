@@ -2,6 +2,21 @@
 
 ---
 
+### 2026-05-20
+
+**更新时间: 2026-05-20 10:30**
+
+- **文章导航交互优化** — 上下篇跳转、首页卡片点击均自动平滑滚动至页面顶部。
+  - Vue Router 新增 `scrollBehavior` 配置，所有路由跳转统一执行 `{ top: 0, behavior: 'smooth' }`。
+  - 文章详情页顶部新增"上一篇 / 下一篇"导航按钮（`src/views/ArticlePage.vue`），与底部导航样式一致，以 `border-bottom` 分隔。
+  - 首页 Hero "阅读文章"按钮改为平滑滚动至下方文章列表区，使用 `scrollIntoView({ behavior: 'smooth' })`。
+- **自定义滚动条组件** — 隐藏原生垂直滚动条，新增 `src/components/ScrollProgress.vue`。
+  - 1px 青色发光轨道 + 填充段，随页面滚动从顶部向下增长，附带竖排百分比文字。
+  - 全局样式（`src/styles/global.css`）通过 `scrollbar-width: none` 和 `::-webkit-scrollbar` 隐藏原生滚动条。
+  - 移动端保留显示（≤640px 缩小边距与轨道高度）。
+
+---
+
 ### 2026-05-19
 
 **更新时间: 2026-05-19 17:50**

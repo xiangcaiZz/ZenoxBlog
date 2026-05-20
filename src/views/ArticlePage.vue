@@ -134,6 +134,31 @@ function goToArticle(slug: string) {
         </div>
       </header>
 
+      <!-- Top navigation between articles -->
+      <nav class="article-nav article-nav--top">
+        <div class="article-nav__inner">
+          <button
+            v-if="prevArticle()"
+            class="article-nav__link article-nav__link--prev"
+            @click="goToArticle(prevArticle()!.slug)"
+          >
+            <span class="article-nav__label">&larr; 上一篇</span>
+            <span class="article-nav__title">{{ prevArticle()!.title }}</span>
+          </button>
+          <span v-else class="article-nav__link article-nav__link--placeholder"></span>
+
+          <button
+            v-if="nextArticle()"
+            class="article-nav__link article-nav__link--next"
+            @click="goToArticle(nextArticle()!.slug)"
+          >
+            <span class="article-nav__label">下一篇 &rarr;</span>
+            <span class="article-nav__title">{{ nextArticle()!.title }}</span>
+          </button>
+          <span v-else class="article-nav__link article-nav__link--placeholder"></span>
+        </div>
+      </nav>
+
       <!-- Body -->
       <main class="article-body">
         <div class="article-body__inner">
@@ -407,6 +432,13 @@ function goToArticle(slug: string) {
   gap: 28px;
   border-top: 1px solid var(--color-border);
   padding-top: 48px;
+}
+
+.article-nav--top .article-nav__inner {
+  border-top: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-top: 0;
+  padding-bottom: 48px;
 }
 
 .article-nav__link {

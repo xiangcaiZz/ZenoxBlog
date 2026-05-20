@@ -14,6 +14,9 @@ const router = createRouter({
       component: () => import('@/views/ArticlePage.vue'),
     },
   ],
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' }
+  },
 })
 
 export default router

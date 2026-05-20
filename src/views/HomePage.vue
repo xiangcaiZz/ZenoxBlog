@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import BlogCard from '@/components/BlogCard.vue'
 import PageFooter from '@/components/PageFooter.vue'
 import { articles } from '@/data/articles'
+
+const featuredRef = ref<HTMLElement | null>(null)
+
+function scrollToArticles() {
+  featuredRef.value?.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -20,17 +27,17 @@ import { articles } from '@/data/articles'
           一份关于技术、设计与软件工艺的个人日志——在代码与创意交汇的边界航行。
         </p>
         <div class="hero__actions">
-          <a href="#" class="hero__btn hero__btn--primary">
+          <button class="hero__btn hero__btn--primary" @click="scrollToArticles">
             阅读文章
             <span class="hero__btn-arrow">&darr;</span>
-          </a>
+          </button>
           <a href="#" class="hero__btn hero__btn--secondary"> 了解更多 </a>
         </div>
       </div>
     </section>
 
     <!-- Featured Section -->
-    <section class="featured">
+    <section ref="featuredRef" class="featured">
       <div class="featured__inner">
         <div class="section-header">
           <span class="section-header__line"></span>
