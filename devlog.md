@@ -2,6 +2,32 @@
 
 ---
 
+### 2026-05-21
+
+**更新时间: 2026-05-21 17:00**
+
+- **文章编辑页面** — 新增 `src/views/ArticleEditPage.vue` + `src/components/ArticleEditorModal.vue`。
+  - 长按左上角 ZENOX 按钮 2 秒进入编辑页，短按仍为返回首页。
+  - 文章卡片网格：虚线 "+" 新增按钮 + 已有文章列表，点击卡片进入编辑模式，右上角 × 悬停显示删除按钮。
+  - 弹窗含标题、日期、分类、阅读时长、导言、正文（Markdown）六个字段，深色主题 + 青色强调 + 等宽字体代码区。
+  - 保存校验标题非空、自动生成 slug；删除需 confirm 确认，阻止事件冒泡。
+- **响应式文章数据层** — 新增 `src/composables/useArticles.ts`。
+  - 模块级 `ref<Article[]>` 单例，从 `src/data/articles.ts` 浅拷贝初始值，`addArticle` / `updateArticle` / `removeArticle` 三个方法。
+  - 首页、详情页、编辑页统一切换到 `useArticles()`，编辑页的增删改在所有页面即时反映。
+- **自定义对话框组件** — 新增 `src/composables/useDialog.ts` + `src/components/CustomDialog.vue`。
+  - 基于 Promise 的 `alert(message)` / `confirm(message)` API，模块级单例，全局可用。
+  - 居中深色面板、青色强调线 + Orbitron 标题，`alert` 单按钮 / `confirm` 双按钮，scale+opacity 进出场过渡。
+  - 全局挂载到 `App.vue`，替换了编辑页的原生 `window.confirm`。
+- **页面结构优化** — `NavBar` 从三个页面中提升至 `App.vue` 全局渲染，所有页面共享同一个导航栏实例。
+
+---
+
+**更新时间: 2026-05-21 11:00**
+
+- **Axios 请求封装**（已移除）— 曾安装 `axios` 并创建 `src/utils/request.ts`，含 mockDB.json 数据层与 CRUD mock 路由，后统一清理。
+
+---
+
 ### 2026-05-20
 
 **更新时间: 2026-05-20 10:30**

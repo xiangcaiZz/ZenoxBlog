@@ -1,23 +1,58 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter()
+const route = useRoute()
 const isMenuOpen = ref(false)
+
+// ---- 长按 ZENOX 进入编辑页 ----
+let longPressTimer: ReturnType<typeof setTimeout> | null = null
+const LONG_PRESS_MS = 2000
+let longPressFired = false
+
+function onLogoDown() {
+  longPressFired = false
+  longPressTimer = setTimeout(() => {
+    longPressFired = true
+    router.push({ name: 'edit' })
+  }, LONG_PRESS_MS)
+}
+
+function onLogoUp() {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+  // 短按：返回首页（如果不在首页）
+  if (!longPressFired && route.name !== 'home') {
+    router.push({ name: 'home' })
+  }
+}
+
+function onLogoCancel() {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+}
+
+onUnmounted(() => {
+  if (longPressTimer) clearTimeout(longPressTimer)
+})
 </script>
 
 <template>
   <nav class="navbar">
     <div class="navbar__inner">
-      <RouterLink to="/" class="navbar__logo">
+      <div class="navbar__logo" role="button" tabindex="0" @mousedown.prevent="onLogoDown" @mouseup="onLogoUp"
+        @mouseleave="onLogoCancel" @touchstart.prevent="onLogoDown" @touchend="onLogoUp" @touchcancel="onLogoCancel">
         <span class="navbar__logo-icon">&#9670;</span>
         <span class="navbar__logo-text">ZENOX</span>
-      </RouterLink>
+      </div>
 
-      <button
-        class="navbar__toggle"
-        :class="{ 'navbar__toggle--open': isMenuOpen }"
-        @click="isMenuOpen = !isMenuOpen"
-        aria-label="切换菜单"
-      >
+      <button class="navbar__toggle" :class="{ 'navbar__toggle--open': isMenuOpen }" @click="isMenuOpen = !isMenuOpen"
+        aria-label="切换菜单">
         <span></span>
         <span></span>
         <span></span>
@@ -66,6 +101,8 @@ const isMenuOpen = ref(false)
   letter-spacing: 0.24em;
   color: var(--color-text-primary);
   transition: color 0.3s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
 .navbar__logo:hover {

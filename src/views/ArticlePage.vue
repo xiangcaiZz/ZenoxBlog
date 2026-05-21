@@ -2,9 +2,11 @@
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { marked } from 'marked'
-import NavBar from '@/components/NavBar.vue'
 import PageFooter from '@/components/PageFooter.vue'
-import { articles, type Article } from '@/data/articles'
+import { useArticles } from '@/composables/useArticles'
+import type { Article } from '@/data/articles'
+
+const { articles } = useArticles()
 
 interface ArticleFrontmatter {
   title: string
@@ -80,21 +82,21 @@ watch(
 )
 
 function currentArticleMeta(): Article | undefined {
-  return articles.find((a) => a.slug === route.params.slug)
+  return articles.value.find((a) => a.slug === route.params.slug)
 }
 
 function prevArticle(): Article | undefined {
   const meta = currentArticleMeta()
   if (!meta) return undefined
-  const idx = articles.indexOf(meta)
-  return idx > 0 ? articles[idx - 1] : undefined
+  const idx = articles.value.indexOf(meta)
+  return idx > 0 ? articles.value[idx - 1] : undefined
 }
 
 function nextArticle(): Article | undefined {
   const meta = currentArticleMeta()
   if (!meta) return undefined
-  const idx = articles.indexOf(meta)
-  return idx < articles.length - 1 ? articles[idx + 1] : undefined
+  const idx = articles.value.indexOf(meta)
+  return idx < articles.value.length - 1 ? articles.value[idx + 1] : undefined
 }
 
 function goToArticle(slug: string) {
@@ -104,8 +106,6 @@ function goToArticle(slug: string) {
 
 <template>
   <div class="article-page">
-    <NavBar />
-
     <!-- Loading state -->
     <div v-if="loading" class="article-page__status">
       <div class="article-page__spinner"></div>

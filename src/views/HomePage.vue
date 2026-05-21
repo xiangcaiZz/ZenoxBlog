@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import NavBar from '@/components/NavBar.vue'
 import BlogCard from '@/components/BlogCard.vue'
 import PageFooter from '@/components/PageFooter.vue'
-import { articles } from '@/data/articles'
+import { useArticles } from '@/composables/useArticles'
+
+const { articles } = useArticles()
 
 const featuredRef = ref<HTMLElement | null>(null)
 
@@ -14,8 +15,6 @@ function scrollToArticles() {
 
 <template>
   <div class="home">
-    <NavBar />
-
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero__stars" aria-hidden="true"></div>
@@ -45,16 +44,8 @@ function scrollToArticles() {
         </div>
 
         <div class="featured__grid">
-          <BlogCard
-            v-for="post in articles"
-            :key="post.slug"
-            :slug="post.slug"
-            :title="post.title"
-            :excerpt="post.excerpt"
-            :date="post.date"
-            :category="post.category"
-            :read-time="post.readTime"
-          />
+          <BlogCard v-for="post in articles" :key="post.slug" :slug="post.slug" :title="post.title"
+            :excerpt="post.excerpt" :date="post.date" :category="post.category" :read-time="post.readTime" />
         </div>
       </div>
     </section>
@@ -68,12 +59,7 @@ function scrollToArticles() {
           新文章直达你的邮箱。没有垃圾邮件，只有关于技术与设计的深度思考。
         </p>
         <form class="newsletter__form" @submit.prevent>
-          <input
-            type="email"
-            placeholder="输入你的邮箱"
-            class="newsletter__input"
-            aria-label="邮箱地址"
-          />
+          <input type="email" placeholder="输入你的邮箱" class="newsletter__input" aria-label="邮箱地址" />
           <button type="submit" class="newsletter__submit">订阅</button>
         </form>
       </div>
