@@ -1,19 +1,33 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+const props = defineProps<{
   slug: string
   title: string
   excerpt: string
   date: string
   category: string
   readTime: string
+  image: string
 }>()
+
+// 根据 image 值取色相环不同位置，为每篇文章生成唯一封面渐变色
+const coverStyle = computed(() => {
+  const seed = Number(props.image) || 1
+  const hues = [200, 260, 170, 30, 340, 45]
+  const h = hues[(seed - 1) % hues.length]!
+  return {
+    background: `linear-gradient(135deg, hsl(${h}, 60%, 12%) 0%, hsl(${h + 20}, 50%, 8%) 40%, hsl(${h - 10}, 40%, 5%) 100%)`,
+  }
+})
 </script>
 
 <template>
   <RouterLink :to="{ name: 'article', params: { slug } }" class="card">
-    <div class="card__image">
-      <div class="card__image-placeholder">
+    <div class="card__image" :style="coverStyle">
+      <div class="card__image-overlay">
         <span class="card__image-icon">&#9670;</span>
+        <span class="card__image-badge">{{ category }}</span>
       </div>
     </div>
 
@@ -60,33 +74,52 @@ defineProps<{
 .card__image {
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--color-bg-secondary);
-}
-
-.card__image-placeholder {
-  width: 100%;
-  height: 100%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0a1628 0%, #0f1f3a 50%, #0a1628 100%);
-  position: relative;
 }
 
-.card__image-placeholder::before {
-  content: '';
+.card__image-overlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(0, 200, 232, 0.08), transparent 60%),
-    radial-gradient(circle at 70% 60%, rgba(240, 160, 80, 0.06), transparent 60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 7, 16, 0.35);
+  transition: background 0.4s ease;
+}
+
+.card:hover .card__image-overlay {
+  background: rgba(2, 7, 16, 0.15);
 }
 
 .card__image-icon {
   font-size: 2.5rem;
   color: var(--color-accent);
-  opacity: 0.4;
+  opacity: 0.35;
   filter: drop-shadow(0 0 10px var(--color-accent-glow));
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.card:hover .card__image-icon {
+  opacity: 0.55;
+  transform: scale(1.1);
+}
+
+.card__image-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  background: rgba(2, 7, 16, 0.7);
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
 }
 
 .card__body {

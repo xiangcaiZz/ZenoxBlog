@@ -1,67 +1,66 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { marked } from 'marked'
 import PageFooter from '@/components/PageFooter.vue'
 import { useArticles } from '@/composables/useArticles'
+import { get } from '@/utils/request'
+import type { ArticleRecord } from '@/utils/request'
 import type { Article } from '@/data/articles'
 
 const { articles } = useArticles()
 
-interface ArticleFrontmatter {
+/** 文章详情数据（含 Markdown 渲染后的 HTML 与封面图片标识） */
+interface ArticleData {
+  id: number
+  image: string
   title: string
   date: string
   category: string
   readTime: string
   excerpt: string
-  content: string
+  contentHtml: string
 }
 
 const route = useRoute()
 const router = useRouter()
 
-const article = ref<ArticleFrontmatter | null>(null)
+const article = ref<ArticleData | null>(null)
 const loading = ref(true)
 const error = ref(false)
 
-function parseFrontmatter(raw: string): { meta: Record<string, string>; content: string } {
-  const match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/)
-  if (!match) {
-    return { meta: {}, content: raw }
+// 根据 image 值生成封面渐变
+const coverStyle = computed(() => {
+  if (!article.value) return {}
+  const seed = Number(article.value.image) || 1
+  const hues = [200, 260, 170, 30, 340, 45]
+  const h = hues[(seed - 1) % hues.length]!
+  return {
+    background: `linear-gradient(135deg, hsl(${h}, 60%, 14%) 0%, hsl(${h + 20}, 50%, 8%) 50%, hsl(${h - 10}, 40%, 3%) 100%)`,
   }
+})
 
-  const metaBlock = match[1]!
-  const content = match[2]!
-
-  const meta: Record<string, string> = {}
-  for (const line of metaBlock.split('\n')) {
-    const kv = line.match(/^(\w+):\s*"?(.+?)"?\s*$/)
-    if (kv) {
-      meta[kv[1]!] = kv[2]!
-    }
-  }
-
-  return { meta, content }
-}
-
+// 根据 slug 从 articles 列表中查找 id，再通过 API 获取完整文章
 async function fetchArticle(slug: string) {
   loading.value = true
   error.value = false
 
   try {
-    const res = await fetch(`/docs/${slug}.md`)
-    if (!res.ok) throw new Error('Article not found')
-    const raw = await res.text()
-    const { meta, content: mdContent } = parseFrontmatter(raw)
-    const html = await marked.parse(mdContent)
+    const meta = articles.value.find((a) => a.slug === slug)
+    if (!meta) throw new Error('文章不在列表中')
+
+    const full = await get<ArticleRecord>(`/articles/${meta.id}`)
+    const html = await marked.parse(full.content)
 
     article.value = {
-      title: meta.title || '',
-      date: meta.date || '',
-      category: meta.category || '',
-      readTime: meta.readTime || '',
-      excerpt: meta.excerpt || '',
-      content: html,
+      id: full.id,
+      image: full.image,
+      title: full.title,
+      date: full.date,
+      category: full.category,
+      readTime: full.readTime,
+      excerpt: full.excerpt,
+      contentHtml: html,
     }
   } catch {
     error.value = true
@@ -119,6 +118,13 @@ function goToArticle(slug: string) {
 
     <!-- Article content -->
     <template v-else-if="article">
+      <!-- 封面图 -->
+      <div class="article-cover" :style="coverStyle">
+        <div class="article-cover__overlay">
+          <span class="article-cover__category">{{ article.category }}</span>
+        </div>
+      </div>
+
       <!-- Hero header -->
       <header class="article-header">
         <div class="article-header__inner">
@@ -162,7 +168,7 @@ function goToArticle(slug: string) {
       <!-- Body -->
       <main class="article-body">
         <div class="article-body__inner">
-          <div class="article-body__content" v-html="article.content"></div>
+          <div class="article-body__content" v-html="article.contentHtml"></div>
         </div>
       </main>
 
@@ -242,6 +248,48 @@ function goToArticle(slug: string) {
 
 .article-page__back-link:hover {
   opacity: 0.7;
+}
+
+/* ===== Article Cover ===== */
+.article-cover {
+  height: 360px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--nav-height);
+}
+
+.article-cover__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 7, 16, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 24px 32px;
+}
+
+.article-cover__category {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  background: rgba(2, 7, 16, 0.75);
+  border: 1px solid var(--color-border);
+  padding: 6px 14px;
+}
+
+@media (max-width: 640px) {
+  .article-cover {
+    height: 220px;
+  }
+
+  .article-cover__overlay {
+    padding: 16px 20px;
+  }
 }
 
 /* ===== Article Header ===== */

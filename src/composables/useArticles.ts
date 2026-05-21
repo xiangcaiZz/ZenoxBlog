@@ -5,6 +5,11 @@ import { articles as initialArticles, type Article } from '@/data/articles'
 const articles = ref<Article[]>([...initialArticles])
 
 export function useArticles() {
+  // 从 API 批量覆盖文章列表
+  function setArticles(list: Article[]) {
+    articles.value = list
+  }
+
   // 新增文章到列表头部
   function addArticle(article: Article) {
     articles.value.unshift(article)
@@ -26,5 +31,5 @@ export function useArticles() {
     }
   }
 
-  return { articles, addArticle, updateArticle, removeArticle }
+  return { articles, setArticles, addArticle, updateArticle, removeArticle }
 }

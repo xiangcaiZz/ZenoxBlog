@@ -1,4 +1,7 @@
+/** 文章元信息（不含正文），与 mockDB.json 中 articles 结构对应 */
 export interface Article {
+  id: number
+  image: string
   slug: string
   title: string
   date: string
@@ -7,14 +10,11 @@ export interface Article {
   excerpt: string
 }
 
-/**
- * 文章注册表。
- * 新增文章步骤：
- * 1. 在 `public/docs/{slug}.md` 创建 md 文件，添加 frontmatter（title, date, category, readTime, excerpt）
- * 2. 在本数组中追加一条同 slug 的记录
- */
+/** 文章初始数据（json-server 启动前的后备） */
 export const articles: Article[] = [
   {
+    id: 1,
+    image: '1',
     slug: 'the-future-of-edge-computing',
     title: '边缘计算的未来：超越云端',
     date: '2026-05-15',
@@ -24,6 +24,8 @@ export const articles: Article[] = [
       '随着计算不断向数据源头靠近，边缘计算正在重塑我们对延迟、隐私和分布式系统架构的认知。',
   },
   {
+    id: 2,
+    image: '2',
     slug: 'designing-for-the-unknown',
     title: '为未知而设计：系统化 UI 思维方式',
     date: '2026-05-10',
@@ -33,6 +35,8 @@ export const articles: Article[] = [
       '当为复杂系统构建界面时，传统的设计模式不再适用。系统化思维方式将改变一切。',
   },
   {
+    id: 3,
+    image: '3',
     slug: 'rust-in-production',
     title: 'Rust 实战：一年生产环境经验总结',
     date: '2026-05-03',
@@ -42,6 +46,8 @@ export const articles: Article[] = [
       '将核心服务迁移到 Rust 一年后，这里有意想不到的收获、意料之外的摩擦，以及鲜有人提及的生态真相。',
   },
   {
+    id: 4,
+    image: '4',
     slug: 'local-first-software',
     title: '本地优先软件的悄然革命',
     date: '2026-04-28',
@@ -51,6 +57,8 @@ export const articles: Article[] = [
       'CRDT、离线优先架构，以及不断壮大的运动——将数据归还给用户，而非集中式服务器。',
   },
   {
+    id: 5,
+    image: '5',
     slug: 'typography-as-architecture',
     title: '字体排印即架构：构建视觉层次',
     date: '2026-04-20',
@@ -60,6 +68,8 @@ export const articles: Article[] = [
       '字体不仅仅是可读性——它是任何界面的结构框架。一次关于网页字体排印系统的深度探索。',
   },
   {
+    id: 6,
+    image: '6',
     slug: 'beyond-rest-event-driven-apis',
     title: '超越 REST：现代应用的事件驱动 API',
     date: '2026-04-12',

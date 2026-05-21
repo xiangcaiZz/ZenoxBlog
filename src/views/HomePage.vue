@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import BlogCard from '@/components/BlogCard.vue'
 import PageFooter from '@/components/PageFooter.vue'
 import { useArticles } from '@/composables/useArticles'
+import { get } from '@/utils/request'
+import type { Article } from '@/data/articles'
 
-const { articles } = useArticles()
+const { articles, setArticles } = useArticles()
 
 const featuredRef = ref<HTMLElement | null>(null)
 
 function scrollToArticles() {
   featuredRef.value?.scrollIntoView({ behavior: 'smooth' })
 }
+
+// 挂载时从 json-server 获取文章列表，失败则使用本地后备数据
+onMounted(async () => {
+  try {
+    const data = await get<Article[]>('/articles')
+    console.log('[首页] /articles 返回结果:', data)
+    setArticles(data)
+  } catch {
+    // 请求失败则使用本地后备数据
+  }
+})
 </script>
 
 <template>
@@ -45,7 +58,8 @@ function scrollToArticles() {
 
         <div class="featured__grid">
           <BlogCard v-for="post in articles" :key="post.slug" :slug="post.slug" :title="post.title"
-            :excerpt="post.excerpt" :date="post.date" :category="post.category" :read-time="post.readTime" />
+            :excerpt="post.excerpt" :date="post.date" :category="post.category" :read-time="post.readTime"
+            :image="post.image" />
         </div>
       </div>
     </section>

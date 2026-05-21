@@ -5,6 +5,8 @@ import PageFooter from '@/components/PageFooter.vue'
 import ArticleEditorModal from '@/components/ArticleEditorModal.vue'
 import { useArticles } from '@/composables/useArticles'
 import { useDialog } from '@/composables/useDialog'
+import { post, put, del } from '@/utils/request'
+import type { ArticleRecord } from '@/utils/request'
 import type { Article } from '@/data/articles'
 
 const router = useRouter()
@@ -27,21 +29,44 @@ function openEdit(article: Article) {
   showModal.value = true
 }
 
-// 删除文章
+// 删除文章：调用 DELETE /articles/:id，同步本地数据
 async function handleDelete(slug: string, event: Event) {
   event.stopPropagation()
   const confirmed = await dialog.confirm('确认删除这篇文章？此操作不可撤销。')
-  if (confirmed) {
+  if (!confirmed) return
+
+  const target = articles.value.find((a) => a.slug === slug)
+  if (!target) return
+
+  try {
+    await del(`/articles/${target.id}`)
+    removeArticle(slug)
+  } catch {
+    // 请求失败时仍移除本地数据
     removeArticle(slug)
   }
 }
 
-// 保存回调：新增则插入列表头部，编辑则按 slug 合并更新，随后关闭弹窗并返回首页
-function handleSave(data: { article: Article; content: string; isNew: boolean }) {
-  if (data.isNew) {
-    addArticle(data.article)
-  } else {
-    updateArticle(data.article.slug, data.article)
+// 保存回调：新增 POST /articles，编辑 PUT /articles/:id，同步本地数据后返回首页
+async function handleSave(data: { article: Article; content: string; isNew: boolean }) {
+  const payload: Partial<ArticleRecord> = { ...data.article, content: data.content }
+
+  try {
+    if (data.isNew) {
+      const created = await post<ArticleRecord>('/articles', payload)
+      data.article.id = created.id
+      addArticle(data.article)
+    } else {
+      await put(`/articles/${data.article.id}`, payload)
+      updateArticle(data.article.slug, data.article)
+    }
+  } catch {
+    // 请求失败时仍更新本地数据
+    if (data.isNew) {
+      addArticle(data.article)
+    } else {
+      updateArticle(data.article.slug, data.article)
+    }
   }
 
   showModal.value = false

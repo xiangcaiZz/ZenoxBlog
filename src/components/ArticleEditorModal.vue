@@ -19,6 +19,7 @@ const category = ref('技术')
 const readTime = ref('5 分钟')
 const excerpt = ref('')
 const content = ref('')
+const image = ref('')
 const isNew = ref(true)
 
 // 监听外部 article 变化，同步填充（编辑模式）或重置（新增模式）表单
@@ -31,6 +32,7 @@ watch(
       category.value = a.category
       readTime.value = a.readTime
       excerpt.value = a.excerpt
+      image.value = a.image
       isNew.value = false
     } else {
       title.value = ''
@@ -38,6 +40,7 @@ watch(
       category.value = '技术'
       readTime.value = '5 分钟'
       excerpt.value = ''
+      image.value = ''
       isNew.value = true
     }
     content.value = ''
@@ -49,8 +52,11 @@ watch(
 function handleSave() {
   if (!title.value.trim()) return
 
+  const id = props.article?.id ?? 0
   const slug = props.article?.slug ?? title.value.trim().toLowerCase().replace(/\s+/g, '-')
   const article: Article = {
+    id,
+    image: image.value || String(Date.now()),
     slug,
     title: title.value.trim(),
     date: date.value,
@@ -96,6 +102,11 @@ function handleSave() {
               <span class="editor-modal__label">阅读时长</span>
               <input v-model="readTime" class="editor-modal__input" placeholder="5 分钟" />
             </label>
+          </div>
+
+          <div class="editor-modal__row">
+            <label class="editor-modal__label">封面图片（预留）</label>
+            <input v-model="image" class="editor-modal__input" placeholder="封面标识，暂与 id 一致" />
           </div>
 
           <div class="editor-modal__row">

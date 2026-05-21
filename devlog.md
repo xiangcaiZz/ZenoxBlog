@@ -4,6 +4,28 @@
 
 ### 2026-05-21
 
+**更新时间: 2026-05-21 19:30**
+
+- **mockDB 数据层 + json-server** — 新增 `public/docs/mockDB.json` 替代全部 `.md` 文章，安装 `json-server@0.17.4` + `axios`。
+  - 每篇文章含 `id`、`image`、`slug`、`title`、`date`、`category`、`readTime`、`excerpt`、`content` 九个字段。
+  - `npm run db` 启动 `json-server --watch --port 4396`，对外暴露 `GET/POST/PUT/DELETE /articles` 和 `/articles/:id`。
+  - 项目不再依赖 `public/docs/*.md` 文件，全部 md 已删除。
+- **Axios 请求拦截器** — 新增 `src/utils/request.ts`，baseURL 指向 `http://localhost:4396`。
+  - 请求拦截器自动注入 Bearer token；响应拦截器统一处理 401 重定向。
+  - 导出 `get`/`post`/`put`/`del` 四个类型安全方法，导出 `ArticleRecord` 完整数据模型。
+- **首页 API 驱动** — `HomePage` 挂载时调用 `GET /articles` → `setArticles()` 填充列表，失败回退本地后备数据。
+- **详情页按 id 请求** — `ArticlePage` 改为根据 slug 从本地列表查找 `id` → `GET /articles/:id` 获取完整数据 + `marked` 渲染正文。
+- **文章封面 Demo** — `BlogCard` 与 `ArticlePage` 新增基于 CSS 渐变的封面图展示。
+  - 根据 `image` 字段取 hsl 色相环不同位置，为每篇文章生成唯一色调的渐变色封面。
+  - BlogCard 卡片封面含分类 badge；详情页顶部展示 360px 封面 + 分类标签。
+- **编辑页 API 同步** — `ArticleEditPage` 增删改操作全量调用 REST API。
+  - 新增 `POST /articles`，编辑 `PUT /articles/:id`，删除 `DELETE /articles/:id`。
+  - 请求成功/失败均同步本地 `useArticles` 数据，保证列表即时更新。
+  - `ArticleEditorModal` 新增封面 `image` 字段输入（预留后续上传能力）。
+- **数据模型升级** — `Article` 接口新增 `id`、`image` 字段，`useArticles` 新增 `setArticles` 批量覆盖方法。
+
+---
+
 **更新时间: 2026-05-21 17:00**
 
 - **文章编辑页面** — 新增 `src/views/ArticleEditPage.vue` + `src/components/ArticleEditorModal.vue`。

@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm run *)",
       "Bash(npm install *)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(rm \"d:/Desktop/1/MyWork/ZenoxBlog/public/docs/\"*.md)"
+    ],
+    "additionalDirectories": [
+      "d:\\Desktop\\1\\MyWork\\ZenoxBlog\\public\\docs"
     ]
   },
   "enabledPlugins": {
