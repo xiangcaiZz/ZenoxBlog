@@ -18,6 +18,11 @@ const router = createRouter({
       name: 'edit',
       component: () => import('@/views/ArticleEditPage.vue'),
     },
+    {
+      path: '/resume',
+      name: 'resume',
+      component: () => import('@/views/ResumePage.vue'),
+    },
   ],
   scrollBehavior() {
     return { top: 0, behavior: 'smooth' }

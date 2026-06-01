@@ -4,7 +4,8 @@
       "Bash(npm run *)",
       "Bash(npm install *)",
       "Bash(npm uninstall *)",
-      "Bash(rm \"d:/Desktop/1/MyWork/ZenoxBlog/public/docs/\"*.md)"
+      "Bash(rm \"d:/Desktop/1/MyWork/ZenoxBlog/public/docs/\"*.md)",
+      "Bash(powershell -Command \"Get-Date -Format 'yyyy-MM-dd HH:mm'\")"
     ],
     "additionalDirectories": [
       "d:\\Desktop\\1\\MyWork\\ZenoxBlog\\public\\docs"

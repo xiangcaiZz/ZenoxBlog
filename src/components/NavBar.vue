@@ -37,6 +37,20 @@ function onLogoCancel() {
   }
 }
 
+// 跳转至文章列表：已在首页则直接滚动，否则先导航再滚动
+function goToArticles() {
+  isMenuOpen.value = false
+  if (route.name === 'home') {
+    document.querySelector('.featured')?.scrollIntoView({ behavior: 'smooth' })
+  } else {
+    const remove = router.afterEach(() => {
+      document.querySelector('.featured')?.scrollIntoView({ behavior: 'smooth' })
+      remove()
+    })
+    router.push({ name: 'home' })
+  }
+}
+
 onUnmounted(() => {
   if (longPressTimer) clearTimeout(longPressTimer)
 })
@@ -59,10 +73,10 @@ onUnmounted(() => {
       </button>
 
       <div class="navbar__links" :class="{ 'navbar__links--open': isMenuOpen }">
-        <a href="#" class="navbar__link">文章</a>
-        <a href="#" class="navbar__link">分类</a>
-        <a href="#" class="navbar__link">关于</a>
-        <a href="#" class="navbar__link navbar__link--accent">订阅</a>
+        <button class="navbar__link" @click="goToArticles">文章</button>
+        <RouterLink to="/resume" class="navbar__link" @click="isMenuOpen = false">简历</RouterLink>
+        <RouterLink to="/" class="navbar__link">关于</RouterLink>
+        <RouterLink to="/" class="navbar__link navbar__link--accent">订阅</RouterLink>
       </div>
     </div>
   </nav>

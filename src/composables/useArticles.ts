@@ -1,8 +1,8 @@
 import { ref } from 'vue'
-import { articles as initialArticles, type Article } from '@/data/articles'
+import type { Article } from '@/data/articles'
 
-// 模块级响应式文章列表，所有调用方共享同一份数据
-const articles = ref<Article[]>([...initialArticles])
+// 模块级响应式文章列表，初始为空，由首页 API 请求填充
+const articles = ref<Article[]>([])
 
 export function useArticles() {
   // 从 API 批量覆盖文章列表

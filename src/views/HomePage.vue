@@ -8,20 +8,23 @@ import type { Article } from '@/data/articles'
 
 const { articles, setArticles } = useArticles()
 
+const loading = ref(true)
 const featuredRef = ref<HTMLElement | null>(null)
 
 function scrollToArticles() {
   featuredRef.value?.scrollIntoView({ behavior: 'smooth' })
 }
 
-// 挂载时从 json-server 获取文章列表，失败则使用本地后备数据
+// 挂载时从 json-server 获取文章列表
 onMounted(async () => {
   try {
     const data = await get<Article[]>('/articles')
     console.log('[首页] /articles 返回结果:', data)
     setArticles(data)
   } catch {
-    // 请求失败则使用本地后备数据
+    // 请求失败保持空列表，骨架屏自动消失
+  } finally {
+    loading.value = false
   }
 })
 </script>
@@ -56,7 +59,21 @@ onMounted(async () => {
           <span class="section-header__label">最新文章</span>
         </div>
 
-        <div class="featured__grid">
+        <!-- 默认骨架屏：请求前或无数据时展示 -->
+        <div v-if="loading || articles.length === 0" class="featured__grid">
+          <div v-for="n in 6" :key="n" class="skeleton-card">
+            <div class="skeleton-card__image"></div>
+            <div class="skeleton-card__body">
+              <div class="skeleton-card__line skeleton-card__line--short"></div>
+              <div class="skeleton-card__line skeleton-card__line--long"></div>
+              <div class="skeleton-card__line skeleton-card__line--mid"></div>
+              <div class="skeleton-card__line skeleton-card__line--mid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 文章列表 -->
+        <div v-else-if="articles.length > 0" class="featured__grid">
           <BlogCard v-for="post in articles" :key="post.slug" :slug="post.slug" :title="post.title"
             :excerpt="post.excerpt" :date="post.date" :category="post.category" :read-time="post.readTime"
             :image="post.image" />
@@ -268,6 +285,78 @@ onMounted(async () => {
 
   .featured__grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Skeleton Loading ===== */
+.skeleton-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+}
+
+.skeleton-card__image {
+  aspect-ratio: 16 / 9;
+  background: rgba(255, 255, 255, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-card__image::after,
+.skeleton-card__line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(0, 200, 232, 0.06) 50%,
+    rgba(255, 255, 255, 0.04) 60%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 2s ease-in-out infinite;
+}
+
+.skeleton-card__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.skeleton-card__line {
+  height: 14px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-card__line--short {
+  width: 40%;
+  height: 10px;
+}
+
+.skeleton-card__line--long {
+  width: 90%;
+  height: 18px;
+}
+
+.skeleton-card__line--mid {
+  width: 75%;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
 
